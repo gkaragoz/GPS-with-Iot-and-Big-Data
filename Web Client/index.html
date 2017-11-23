@@ -29,26 +29,6 @@
       //New map
       var map = new google.maps.Map(document.getElementById('map'), options);
 
-      /*
-      //Add marker
-      //Sakarya University 40.743817° N, 30.338253° E
-      var marker = new google.maps.Marker({
-        position:{lat:40.743817,lng:30.338253},
-        map:map,
-        icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
-      });
-
-      //Info window
-      var infoWindow = new google.maps.InfoWindow({
-        content:'<h1>Sakarya University</h1>'
-      });
-
-      //Click event for marker
-      marker.addListener('click', function(){
-        infoWindow.open(map, marker);
-      });
-      */
-
       //Array of markers
       var markers = [
         {
@@ -68,14 +48,6 @@
       for(var i=0; i<markers.length; i++){
         addMarker(markers[i]);
       }
-
-      // addMarker({
-      //   coords:{lat:40.743817,lng:30.338253},
-      //   iconImage:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-      //   content:'<h1>Sakarya University</h1>'
-      // });
-      // addMarker({coords:{lat:40.553817,lng:30.338253}});
-      // addMarker({coords:{lat:40.853817,lng:30.455253}});
 
       //Add marker function
       function addMarker(props){
