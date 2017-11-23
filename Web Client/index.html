@@ -49,13 +49,33 @@
       });
       */
 
-      addMarker({
-        coords:{lat:40.743817,lng:30.338253},
-        iconImage:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-        content:'<h1>Sakarya University</h1>'
-      });
-      addMarker({coords:{lat:40.553817,lng:30.338253}});
-      addMarker({coords:{lat:40.853817,lng:30.455253}});
+      //Array of markers
+      var markers = [
+        {
+          coords:{lat:40.743817,lng:30.338253},
+          iconImage:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+          content:'<h1>Sakarya University</h1>'
+        },
+        {
+          coords:{lat:40.553817,lng:30.338253}
+        },
+        {
+          coords:{lat:40.853817,lng:30.455253}
+        }
+      ];
+
+      //Loop through markers
+      for(var i=0; i<markers.length; i++){
+        addMarker(markers[i]);
+      }
+
+      // addMarker({
+      //   coords:{lat:40.743817,lng:30.338253},
+      //   iconImage:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+      //   content:'<h1>Sakarya University</h1>'
+      // });
+      // addMarker({coords:{lat:40.553817,lng:30.338253}});
+      // addMarker({coords:{lat:40.853817,lng:30.455253}});
 
       //Add marker function
       function addMarker(props){
