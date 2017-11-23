@@ -61,8 +61,14 @@
         var marker = new google.maps.Marker({
           position:props.coords,
           map:map,
-          icon:props.iconImage
+          //icon:props.iconImage
         });
+
+        //Check for custom icon
+        if(props.iconImage){
+          //Set icon image
+          marker.setIcon(props.iconImage);
+        }
       }
     }
   </script>
