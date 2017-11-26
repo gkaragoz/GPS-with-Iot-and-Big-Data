@@ -10,7 +10,7 @@
     "express":"*",
     "body-parser":"*",
     "mongoose":"*"
-  }
+  },
   "author": "Gökhan Karagöz",
   "license": "ISC"
 }
