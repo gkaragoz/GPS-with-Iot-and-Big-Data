@@ -4,11 +4,14 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 //Connect to Mongoose
-// mongoose.connect('mongodb://localhost/gpsdb');
-// var db = mongoose.connection;
+mongoose.connect('mongodb://localhost/gpsdb', {
+  useMongoClient: true,
+  /* other options */
+});
+var db = mongoose.connection;
 
 app.get('/', function(req, res){
-  res.send('Hello World!');
+  res.send('Please use /api/gps');
 });
 
 app.listen(3000);
