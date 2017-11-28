@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 Gps = require('./models/gps');
+User = require('./models/user');
 
 //Connect to Mongoose
 mongoose.connect('mongodb://localhost/gpsdb', {
@@ -22,6 +23,15 @@ app.get('/api/gps', function(req, res){
       throw err;
     }
     res.json(gps);
+  });
+});
+
+app.get('/api/users', function(req, res){
+  User.getUsers(function(err, users){
+    if(err){
+      throw err;
+    }
+    res.json(users);
   });
 });
 
