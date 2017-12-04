@@ -35,7 +35,6 @@
     * Data object to be written to Firebase.
     */
     var data = {
-      sender: null,
       timestamp: 148420310123,
       lat: 40.6940,
       lng: 30.4358
@@ -86,7 +85,6 @@
       var locationsRef = databaseRef.child('app/locations/' + data.sender);
       var newDataRef = locationsRef.push();
       newDataRef.set({
-        sender: data.sender,
         timestamp: data.timestamp,
         lat: data.lat,
         lng: data.lng
