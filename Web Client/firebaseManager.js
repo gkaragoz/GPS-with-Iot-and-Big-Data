@@ -72,13 +72,8 @@ function getFirebaseUserData(){
 
         addMapMarker(markerData);
         clientLocations.push(markerData);
-
       }
     }
-
-    console.log(JSON.stringify(clientLocations));
-
-    //console.log(parsedData.app.locations[Object.keys(parsedData.app.locations)[0]]); //returns 'someVal'
 
     console.log("[info] User datas have been got: " + dataSize + " byte");
     //Add list in main.js
