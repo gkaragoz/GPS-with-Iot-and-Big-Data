@@ -72,8 +72,22 @@ function getFirebaseUserData(){
           "content":content
         };
 
-        addMapMarker(markerData);
-        clientLocations.push(markerData);
+                /////////////////////////////
+                //////////CHECK THIS/////////
+                /////////////////////////////
+                // console.log(markerData);
+                // if (containsObject(markerData, clientLocations))
+                // {
+                //     console.log("Contains");
+                // }
+                // else {
+                //   console.log("Non contains");
+                // }
+                /////////////////////////////
+                //////////CHECK THIS/////////
+                /////////////////////////////
+         clientLocations.push(markerData);
+         addMapMarker(markerData);
       }
     }
 
