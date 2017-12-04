@@ -42,14 +42,46 @@ function initFirebase(){
   });
 }
 
-function getFirebaseUserData(postId){
+function getFirebaseUserData(){
   var databaseRef = firebase.database().ref();
   databaseRef.on('value', function(snapshot) {
+    if (snapshot.val() == null)
+      return;
+
     var stringifiedData = JSON.stringify(snapshot.val());
     var dataSize = Object.keys(stringifiedData).length;
     var parsedData = JSON.parse(stringifiedData);
 
+    var gps = parsedData.app.gps;
+    for (var i = 0; i < Object.keys(gps).length; i++) {
+      var sender = Object.keys(parsedData.app.gps)[i];
+      var locations = gps[sender];
+
+      for (var j = 0; j < Object.keys(locations).length; j++) {
+        var singleLocation = Object.keys(locations)[j];
+        var data = locations[singleLocation];
+
+        var lat = data.lat;
+        var lng = data.lng;
+        var timestamp = data.timestamp;
+
+        var markerData = {
+          "sender":sender,
+          coords:{"lat":lat, "lng":lng}
+        };
+
+        addMapMarker(markerData);
+        clientLocations.push(markerData);
+
+      }
+    }
+
+    console.log(JSON.stringify(clientLocations));
+
+    //console.log(parsedData.app.locations[Object.keys(parsedData.app.locations)[0]]); //returns 'someVal'
+
     console.log("[info] User datas have been got: " + dataSize + " byte");
+    //Add list in main.js
     return parsedData;
   });
 }
@@ -57,7 +89,7 @@ function getFirebaseUserData(postId){
 function writeFirebaseUserData(data) {
   // Get a reference to the database service
   var databaseRef = firebase.database().ref();
-  var locationsRef = databaseRef.child('app/locations/' + data.sender);
+  var locationsRef = databaseRef.child('app/gps/' + data.sender);
   var newDataRef = locationsRef.push();
   newDataRef.set({
     timestamp: data.timestamp,

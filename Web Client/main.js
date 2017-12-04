@@ -1,8 +1,9 @@
+var clientLocations = [];
+
 function initApplication(){
   initMap();
   initFirebase();
   initCustomUIManager();
-
 
   var marker = [
     {
@@ -17,10 +18,11 @@ function initApplication(){
       coords:{lat:40.756025,lng:30.368216}
     }
   ];
+  //
+  // addMapMarker(marker[0]);
+  // addMapMarker(marker[1]);
+  // addMapMarker(marker[2]);
 
-  addMapMarker(marker[0]);
-  addMapMarker(marker[1]);
-  addMapMarker(marker[2]);
+  getFirebaseUserData();
 
-  getFirebaseUserData(1);
 }
