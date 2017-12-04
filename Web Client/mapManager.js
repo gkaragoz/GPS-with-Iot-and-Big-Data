@@ -41,3 +41,17 @@ function addMapMarker(props){
     });
   }
 }
+
+function generateMapLocation() {
+  //Return a number between Left value and Right value;
+  var lat = (Math.random() * (40.800000 - 40.700000) + 40.700000);
+  var lng = (Math.random() * (30.300000 - 30.400000) + 30.400000);
+
+  var location = {
+    "lat":lat,
+    "lng":lng
+  }
+
+  console.log("Random value generated: " + "lat: " + lat + " lng: " + lng);
+  return location;
+}

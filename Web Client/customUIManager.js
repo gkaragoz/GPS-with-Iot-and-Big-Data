@@ -42,15 +42,17 @@ function SendData(controlDiv) {
   controlText.innerHTML = 'Send Data';
   controlUI.appendChild(controlText);
 
-  var dummyData = {
-    sender: "DUMMY_SENDER",
-    timestamp: 148420310123,
-    lat: 40.775384,
-    lng: 30.366367
-  };
 
   // Setup the click event listeners: simply send the data to Firebase.
   controlUI.addEventListener('click', function() {
+    var location = generateMapLocation();
+    var dummyData = {
+      sender: "DUMMY_SENDER",
+      timestamp: 148420310123,
+      lat: location.lat,
+      lng: location.lng
+    };
+
     writeFirebaseUserData(dummyData);
   });
 }
@@ -86,6 +88,6 @@ function GetData(controlDiv) {
 
   // Setup the click event listeners: simply send the data to Firebase.
   controlUI.addEventListener('click', function() {
-    getFirebaseUserData(0);
+    getFirebaseUserData();
   });
 }
