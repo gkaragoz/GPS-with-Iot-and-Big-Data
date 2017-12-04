@@ -64,10 +64,12 @@ function getFirebaseUserData(){
         var lat = data.lat;
         var lng = data.lng;
         var timestamp = data.timestamp;
+        var content = "Lat: " + lat + " Lng: " + lng;
 
         var markerData = {
           "sender":sender,
-          coords:{"lat":lat, "lng":lng}
+          coords:{"lat":lat, "lng":lng},
+          "content":content
         };
 
         addMapMarker(markerData);
