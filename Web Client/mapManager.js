@@ -21,6 +21,15 @@ function addMapMarker(props){
   var marker = new google.maps.Marker({
     position:props.coords,
     map:map,
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 10,
+      fillColor: getRandomColor(),
+    fillOpacity: 0.8,
+    scale: 10,
+    strokeColor: getRandomColor(),
+    strokeWeight: 1
+    }
     //icon:props.iconImage
   });
 
@@ -40,6 +49,15 @@ function addMapMarker(props){
       infoWindow.open(map, marker);
     });
   }
+}
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }
 
 function generateMapLocation() {
