@@ -58,7 +58,7 @@ function SendData(controlDiv) {
 }
 
 /**
- * The SendData sends data to Firebase realtime database.
+ * The GetData receives datas from Firebase database.
  * This constructor takes the control DIV as an argument.
  * @constructor
  */
@@ -86,7 +86,7 @@ function GetData(controlDiv) {
   controlText.innerHTML = 'Get Data';
   controlUI.appendChild(controlText);
 
-  // Setup the click event listeners: simply send the data to Firebase.
+  // Setup the click event listeners: simply get the data from Firebase.
   controlUI.addEventListener('click', function() {
     getFirebaseUserData();
   });
