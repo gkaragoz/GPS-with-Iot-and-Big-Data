@@ -33,9 +33,6 @@ function initFirebase(){
       var uid = user.uid;
       console.log("[info] User has been logged in: " + uid);
       data.sender = uid;
-
-      writeFirebaseUserData(data);
-      getFirebaseUserData(1);
       // ...
     } else {
       // User is signed out.
@@ -57,8 +54,6 @@ function getFirebaseUserData(postId){
 }
 
 function writeFirebaseUserData(data) {
-  console.log("[info] " + JSON.stringify(data) + " will write!");
-
   // Get a reference to the database service
   var databaseRef = firebase.database().ref();
   var locationsRef = databaseRef.child('app/locations/' + data.sender);
@@ -68,5 +63,5 @@ function writeFirebaseUserData(data) {
     lat: data.lat,
     lng: data.lng
   });
-  console.log("[info] Data has been written!");
+  console.log("[info] Data has been written: " + JSON.stringify(data));
 }
