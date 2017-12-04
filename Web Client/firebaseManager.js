@@ -45,12 +45,13 @@ function initFirebase(){
 function getFirebaseUserData(postId){
   var databaseRef = firebase.database().ref();
   databaseRef.on('value', function(snapshot) {
-    var data = JSON.stringify(snapshot.val());
-    var user01 = JSON.parse(data);
+    var stringifiedData = JSON.stringify(snapshot.val());
+    var dataSize = Object.keys(stringifiedData).length;
+    var parsedData = JSON.parse(stringifiedData);
 
-    console.log(JSON.stringify(data));
+    console.log("[info] User datas have been got: " + dataSize + " byte");
+    return parsedData;
   });
-  console.log("[info] User data has been got!");
 }
 
 function writeFirebaseUserData(data) {
