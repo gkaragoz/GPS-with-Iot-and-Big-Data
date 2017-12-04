@@ -34,8 +34,8 @@ function initFirebase(){
       console.log("[info] User has been logged in: " + uid);
       data.sender = uid;
 
-      writeUserData(data);
-      getUserData(1);
+      writeFirebaseUserData(data);
+      getFirebaseUserData(1);
       // ...
     } else {
       // User is signed out.
@@ -43,30 +43,30 @@ function initFirebase(){
     }
     // ...
   });
+}
 
-  function getUserData(postId){
-    var databaseRef = firebase.database().ref();
-    databaseRef.on('value', function(snapshot) {
-      var data = JSON.stringify(snapshot.val());
-      var user01 = JSON.parse(data);
+function getFirebaseUserData(postId){
+  var databaseRef = firebase.database().ref();
+  databaseRef.on('value', function(snapshot) {
+    var data = JSON.stringify(snapshot.val());
+    var user01 = JSON.parse(data);
 
-      console.log(JSON.stringify(data));
-    });
-    console.log("[info] User data has been got!");
-  }
+    console.log(JSON.stringify(data));
+  });
+  console.log("[info] User data has been got!");
+}
 
-  function writeUserData(data) {
-    console.log("[info] " + JSON.stringify(data) + " will write!");
+function writeFirebaseUserData(data) {
+  console.log("[info] " + JSON.stringify(data) + " will write!");
 
-    // Get a reference to the database service
-    var databaseRef = firebase.database().ref();
-    var locationsRef = databaseRef.child('app/locations/' + data.sender);
-    var newDataRef = locationsRef.push();
-    newDataRef.set({
-      timestamp: data.timestamp,
-      lat: data.lat,
-      lng: data.lng
-    });
-    console.log("[info] Data has been written!");
-  }
+  // Get a reference to the database service
+  var databaseRef = firebase.database().ref();
+  var locationsRef = databaseRef.child('app/locations/' + data.sender);
+  var newDataRef = locationsRef.push();
+  newDataRef.set({
+    timestamp: data.timestamp,
+    lat: data.lat,
+    lng: data.lng
+  });
+  console.log("[info] Data has been written!");
 }
