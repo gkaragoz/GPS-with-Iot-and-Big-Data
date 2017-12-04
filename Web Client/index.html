@@ -57,6 +57,8 @@
         data.sender = uid;
 
         writeUserData(data);
+        getUserData(1);
+
         // ...
       } else {
         // User is signed out.
@@ -64,6 +66,17 @@
       }
       // ...
     });
+
+    function getUserData(postId){
+      var databaseRef = firebase.database().ref();
+      databaseRef.on('value', function(snapshot) {
+        var data = JSON.stringify(snapshot.val());
+        var user01 = JSON.parse(data);
+
+        console.log(JSON.stringify(data));
+      });
+      console.log("[info] User data has been got!");
+    }
 
     function writeUserData(data) {
       console.log("[info] " + JSON.stringify(data) + " will write!");
@@ -80,7 +93,6 @@
       });
       console.log("[info] Data has been written!");
     }
-
   </script>
 </body>
 </html>
