@@ -1,0 +1,143 @@
+{
+  "project_info": {
+    "project_number": "195237350046",
+    "firebase_url": "https://iot-gps-for-sau.firebaseio.com",
+    "project_id": "iot-gps-for-sau",
+    "storage_bucket": "iot-gps-for-sau.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195237350046:android:4ee63b05cbe8de09",
+        "android_client_info": {
+          "package_name": "com.iotbigdata.illegaldisease.iotbigdata"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195237350046-j4mt3dj3duih7namiccc1i738q4447da.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iotbigdata.illegaldisease.iotbigdata",
+            "certificate_hash": "939097c0347852d2dd1f83c3874cac383376da15"
+          }
+        },
+        {
+          "client_id": "195237350046-gg6qv0kkkp1eo0c726ial2rjpmkpubkh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBApr6_YbT4jIhCehaaUMy6Zj78Xfc9amA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "195237350046-gg6qv0kkkp1eo0c726ial2rjpmkpubkh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195237350046:android:f04d03636f8b5f9e",
+        "android_client_info": {
+          "package_name": "com.iotbigdata.illegaldisease.androidclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195237350046-nenisbgaoa7tvem3d1lvtnlar5jioq98.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iotbigdata.illegaldisease.androidclient",
+            "certificate_hash": "65eaf46b7e049aa021dc172196dfd045b556edcf"
+          }
+        },
+        {
+          "client_id": "195237350046-gg6qv0kkkp1eo0c726ial2rjpmkpubkh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBApr6_YbT4jIhCehaaUMy6Zj78Xfc9amA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "195237350046-gg6qv0kkkp1eo0c726ial2rjpmkpubkh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195237350046:android:17ab01183e6ee96b",
+        "android_client_info": {
+          "package_name": "br.com.safety.locationlistenerhelper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195237350046-lqb5eh7fe1pb8de560q2m427qvbf298k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.safety.locationlistenerhelper",
+            "certificate_hash": "65eaf46b7e049aa021dc172196dfd045b556edcf"
+          }
+        },
+        {
+          "client_id": "195237350046-gg6qv0kkkp1eo0c726ial2rjpmkpubkh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBApr6_YbT4jIhCehaaUMy6Zj78Xfc9amA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "195237350046-gg6qv0kkkp1eo0c726ial2rjpmkpubkh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
