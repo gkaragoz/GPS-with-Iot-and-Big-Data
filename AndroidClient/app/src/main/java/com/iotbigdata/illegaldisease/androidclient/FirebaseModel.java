@@ -5,16 +5,16 @@ package com.iotbigdata.illegaldisease.androidclient;
  */
 
 public class FirebaseModel {
-    private double lat;
-    private double lng;
-    private double timestamp;
+    public double lat;
+    public double lng;
+    public double timestamp;
     public FirebaseModel(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
     public FirebaseModel(double latidute, double longitude){
-        if(Double.isNaN(latidute) && Double.isInfinite(longitude)){
-            lat = latidute;
-            lng = longitude;
+        if(!Double.isNaN(latidute) &&  !Double.isInfinite(longitude)){
+            this.lat = latidute;
+            this.lng = longitude;
             timestamp = System.currentTimeMillis()/1000;
         }
     }

@@ -105,7 +105,7 @@ public class MapsActivity extends FragmentActivity implements
 
     private void handleNewLocation(Location location) {
         Log.d(TAG, location.toString());
-        Toast.makeText(this,"IN FIREBASE",Toast.LENGTH_LONG);
+
         double currentLatitude = location.getLatitude();
         double currentLongitude = location.getLongitude();
 
@@ -117,7 +117,7 @@ public class MapsActivity extends FragmentActivity implements
                 .title("I am here!");
         mMap.addMarker(options);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
+        WriteToDatabase(currentLatitude,currentLongitude);
     }
 
     @Override
@@ -191,14 +191,14 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
     public void WriteToDatabase(double pLat,double pLng){
-
+        FirebaseModel theModel = new FirebaseModel(pLat,pLng);
         try{
-            FirebaseModel theModel = new FirebaseModel(pLat,pLng);
-            mDatabase.child("app/gps").setValue(theModel);
+            mDatabase.child("app/gps/DUMMY_SENDER").setValue(theModel);
+            Toast.makeText(this,"Location should be added",Toast.LENGTH_LONG).show();
         }
         catch(Exception e){
             System.out.println(e.getMessage());
-            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG);
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
     @Override
