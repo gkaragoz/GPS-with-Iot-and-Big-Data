@@ -2,10 +2,13 @@ package com.iotbigdata.illegaldisease.androidclient;
 
 
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -18,11 +21,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, OnMapReadyCallback{
+        LocationListener, OnMapReadyCallback {
+
+    private DatabaseReference mDatabase;
 
     public static final String TAG = MapsActivity.class.getSimpleName();
 
@@ -54,6 +61,7 @@ public class MapsActivity extends FragmentActivity implements
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)        // 10 seconds, in milliseconds
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -97,7 +105,7 @@ public class MapsActivity extends FragmentActivity implements
 
     private void handleNewLocation(Location location) {
         Log.d(TAG, location.toString());
-
+        Toast.makeText(this,"IN FIREBASE",Toast.LENGTH_LONG);
         double currentLatitude = location.getLatitude();
         double currentLongitude = location.getLongitude();
 
@@ -109,7 +117,9 @@ public class MapsActivity extends FragmentActivity implements
                 .title("I am here!");
         mMap.addMarker(options);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
     }
+
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
@@ -118,8 +128,28 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onConnected(Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location == null) {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
         else {
@@ -160,7 +190,17 @@ public class MapsActivity extends FragmentActivity implements
             Log.i(TAG, "Location services connection failed with code " + connectionResult.getErrorCode());
         }
     }
+    public void WriteToDatabase(double pLat,double pLng){
 
+        try{
+            FirebaseModel theModel = new FirebaseModel(pLat,pLng);
+            mDatabase.child("app/gps").setValue(theModel);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG);
+        }
+    }
     @Override
     public void onLocationChanged(Location location) {
         handleNewLocation(location);
