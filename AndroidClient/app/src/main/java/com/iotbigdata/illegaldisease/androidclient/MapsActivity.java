@@ -1,6 +1,9 @@
 package com.iotbigdata.illegaldisease.androidclient;
 
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.Context;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -8,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -24,12 +28,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Pattern;
+
 public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener, OnMapReadyCallback {
 
     private DatabaseReference mDatabase;
+    private String emailAddress;
 
     public static final String TAG = MapsActivity.class.getSimpleName();
 
@@ -117,7 +124,7 @@ public class MapsActivity extends FragmentActivity implements
                 .title("I am here!");
         mMap.addMarker(options);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        WriteToDatabase(currentLatitude,currentLongitude);
+        //WriteToDatabase(latLng);
     }
 
     @Override
@@ -190,8 +197,8 @@ public class MapsActivity extends FragmentActivity implements
             Log.i(TAG, "Location services connection failed with code " + connectionResult.getErrorCode());
         }
     }
-    public void WriteToDatabase(double pLat,double pLng){
-        FirebaseModel theModel = new FirebaseModel(pLat,pLng);
+    public void WriteToDatabase(LatLng thisLocation){
+        FirebaseModel theModel = new FirebaseModel(thisLocation,this.emailAddress);
         try{
             mDatabase.child("app/gps/DUMMY_SENDER").setValue(theModel);
             Toast.makeText(this,"Location should be added",Toast.LENGTH_LONG).show();
@@ -204,5 +211,17 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onLocationChanged(Location location) {
         handleNewLocation(location);
+    }
+
+    private String getEmail(){
+        String currentEmail = "Anonymous";
+        Pattern gmailPattern = Patterns.EMAIL_ADDRESS;
+        Account[] accounts = AccountManager.get(this).getAccounts();
+        for (Account account : accounts) {
+            if (gmailPattern.matcher(account.name).matches()) {
+                currentEmail = account.name;
+            }
+        }
+        return currentEmail;
     }
 }
