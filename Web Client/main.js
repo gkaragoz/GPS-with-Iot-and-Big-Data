@@ -6,6 +6,7 @@ function initApplication(){
   initFirebase();
 
   getFirebaseUserData();
+  listenFirebase();
 }
 
 function DrawEverything () {
