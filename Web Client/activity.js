@@ -1,17 +1,20 @@
 class Activity {
-  constructor(timestamp, lat, lng, totalDistance, totalTime) {
-    this.timestamp = timestamp;
-    this.lat = lat;
-    this.lng = lng;
+  constructor(locations, totalDistance, totalTime) {
+    this.locations = locations;
     this.totalDistance = totalDistance;
     this.totalTime = totalTime;
   }
 
   Display() {
-    console.log("Timestamp: " + this.timestamp);
-    console.log("Lat: " + this.lat);
-    console.log("Lng: " + this.lng);
+    console.log(this.locations.length + " Locations found: ");
+    for (var i = 0; i < this.locations.length; i++) {
+      this.locations[i].Display();
+    }
     console.log("Total Distance: " + this.totalDistance + " Kilometers");
     console.log("Total Time: " + this.totalTime + " Minutes");
+  }
+
+  GetLocationsCount() {
+    return this.locations.length;
   }
 }

@@ -48,37 +48,48 @@ function getFirebaseUserData(){
     if (snapshot.val() == null)
       return;
 
-    var parsedActivities = [];
-
     var stringifiedData = JSON.stringify(snapshot.val());
     var dataSize = Object.keys(stringifiedData).length;
     var parsedData = JSON.parse(stringifiedData);
 
     var gps = parsedData.gps;
-    for (var i = 0; i < Object.keys(gps).length; i++) {
-      var email = gps.user.email;
-      var name = gps.user.name;
-      var age = gps.user.age;
-      var gender = gps.user.gender;
-      var activities = gps.user.activity;
+    var users = gps.users;
 
-      for (var j = 0; j < Object.keys(activities).length; j++) {
+    for (var i = 0; i < users.length; i++) {
+      var parsedLocations = [];
+      var parsedActivities = [];
+
+      var user = users[i];
+      var email = user.email;
+      var name = user.name;
+      var age = user.age;
+      var gender = user.gender;
+      var activities = user.activities;
+
+      for (var j = 0; j < activities.length; j++) {
         var activity = activities[j];
-        var timestamp = Object.keys(activity)[j];
-        var lat = activity[timestamp].lat;
-        var lng = activity[timestamp].lng;
+        var location = activity.locations;
         var totalDistance = activity.totalDistance;
         var totalTime = activity.totalTime;
 
-        var parsedActivity = new Activity(timestamp, lat, lng, totalDistance, totalTime);
+        for (var k = 0; k < location.length; k++) {
+          var lat = location[k].lat;
+          var lng = location[k].lng;
+          var timestamp = location[k].timestamp;
+
+          var parsedLocation = new Location(lat, lng, timestamp);
+          parsedLocations.push(parsedLocation);
+        }
+        var parsedActivity = new Activity(parsedLocations, totalDistance, totalTime);
         parsedActivities.push(parsedActivity);
+        parsedLocations = [];
       }
       var user = new User(email, name, age, gender, parsedActivities);
-      users.push(user);
+      gpsUsers.push(user);
     }
 
-    for (var i = 0; i < users.length; i++) {
-      users[i].Display();
+    for (var i = 0; i < gpsUsers.length; i++) {
+      gpsUsers[i].Display();
     }
 
     console.log("[info] User datas have been got: " + dataSize + " byte");
