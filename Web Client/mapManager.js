@@ -12,13 +12,24 @@ function initMap(){
     zoom:12,
     center:{lat:40.775384,lng:30.366367}
   });
+}
 
-  var flightPlanCoordinates = [
-    {lat: 40.775384, lng: 30.366367},
-    {lat: 21.291, lng: -157.821},
-    {lat: -18.142, lng: 178.431},
-    {lat: -27.467, lng: 153.027}
-  ];
+function createFlightDraw(locations) {
+  var flightPlanCoordinates = [];
+
+  for (var i = 0; i < locations.length; i++) {
+    var coordinate = {lat: locations[i].lat, lng: locations[i].lng};
+    flightPlanCoordinates.push(coordinate);
+  }
+
+  var centerLat = (flightPlanCoordinates[0].lat + flightPlanCoordinates[1].lat) / 2;
+  var centerLng = (flightPlanCoordinates[0].lng + flightPlanCoordinates[1].lng) / 2;
+
+  var map = new google.maps.Map(document.getElementById('map', options), {
+    zoom:12,
+    center:{lat:centerLat,lng:centerLng}
+  });
+
   var flightPath = new google.maps.Polyline({
     path: flightPlanCoordinates,
     geodesic: true,
@@ -30,39 +41,11 @@ function initMap(){
   flightPath.setMap(map);
 }
 
-//Add marker function
-function addMapMarker(props){
-  var marker = new google.maps.Marker({
-    position:props.coords,
-    map:map,
-    icon: {
-      path: google.maps.SymbolPath.CIRCLE,
-      scale: 10,
-      fillColor: getRandomColor(),
-    fillOpacity: 0.8,
-    scale: 10,
-    strokeColor: getRandomColor(),
-    strokeWeight: 1
-    }
-    //icon:props.iconImage
+function setMapCenter(zoomLevel, location) {
+  var map = new google.maps.Map(document.getElementById('map', options), {
+    zoom:zoomLevel,
+    center:{lat:location.lat,lng:location.lng}
   });
-
-  //Check for custom icon
-  if(props.iconImage){
-    //Set icon image
-    marker.setIcon(props.iconImage);
-  }
-
-  //Check content for info window
-  if (props.content){
-    var infoWindow = new google.maps.InfoWindow({
-      content:props.content
-    });
-
-    marker.addListener('click', function(){
-      infoWindow.open(map, marker);
-    });
-  }
 }
 
 function getRandomColor() {
@@ -86,4 +69,8 @@ function generateMapLocation() {
 
   console.log("Random value generated: " + "lat: " + lat + " lng: " + lng);
   return location;
+}
+
+function getRandomInRange(from, to, fixed) {
+    return (Math.random() * (to - from) + from);
 }
