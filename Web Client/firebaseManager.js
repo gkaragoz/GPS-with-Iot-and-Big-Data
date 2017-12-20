@@ -88,9 +88,7 @@ function getFirebaseUserData(){
       gpsUsers.push(user);
     }
 
-    for (var i = 0; i < gpsUsers.length; i++) {
-      gpsUsers[i].Display();
-    }
+    DrawEverything();
 
     console.log("[info] User datas have been got: " + dataSize + " byte");
     return parsedData;

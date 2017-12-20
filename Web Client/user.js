@@ -19,6 +19,22 @@ class User {
     }
   }
 
+  GetLocations() {
+    var parsedLocations = [];
+    for (var i = 0; i < this.activities.length; i++) {
+      var locations = this.activities[i].locations;
+      for (var j = 0; j < locations.length; j++) {
+        var location = {
+          activityID: Object.keys(this.activities)[i],
+          lat: locations[j].lat,
+          lng: locations[j].lng
+        };
+        parsedLocations.push(location);
+      }
+    }
+    return locations;
+  }
+
   GetActivitiesCount() {
     return this.activities.length;
   }

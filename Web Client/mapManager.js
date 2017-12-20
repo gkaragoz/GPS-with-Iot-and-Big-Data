@@ -22,6 +22,8 @@ function createFlightDraw(locations, color) {
     flightPlanCoordinates.push(coordinate);
   }
 
+  console.log(flightPlanCoordinates);
+
   var centerLat = (flightPlanCoordinates[0].lat + flightPlanCoordinates[1].lat) / 2;
   var centerLng = (flightPlanCoordinates[0].lng + flightPlanCoordinates[1].lng) / 2;
 
@@ -41,15 +43,6 @@ function setMapCenter(zoomLevel, location) {
     zoom:zoomLevel,
     center:{lat:location.lat,lng:location.lng}
   });
-}
-
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
 }
 
 function generateMapLocation() {
