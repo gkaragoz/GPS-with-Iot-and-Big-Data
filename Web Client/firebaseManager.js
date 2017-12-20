@@ -95,6 +95,26 @@ function getFirebaseUserData(){
   });
 }
 
+function listenFirebase() {
+  var ref = firebase.database().ref('/gps/');
+  //I am doing a child based listener, but you can use .once('value')...
+  ref.on('child_added', function(data) {
+     //data.key will be like -KPmraap79lz41FpWqLI
+     // addNewTaskView(data.key, data.val().title);
+     console.log("Child added: " + data.key + " " + data.val().title);
+  });
+
+  ref.on('child_changed', function(data) {
+     // updateTaskView(data.key, data.val().title);
+     console.log("Child changed: " + data.key + " " + data.val().title);
+  });
+
+  ref.on('child_removed', function(data) {
+     // removeTaskView(data.key, data.val().title);
+     console.log("Child removed: " + data.key + " " + data.val().title);
+  });
+}
+
 function writeFirebaseUserData(data) {
   // Get a reference to the database service
   var databaseRef = firebase.database().ref();
