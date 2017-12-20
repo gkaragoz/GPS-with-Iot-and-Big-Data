@@ -21,15 +21,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener, OnMapReadyCallback {
 
-    private DatabaseReference mDatabase;
     private String emailAddress;
 
     public static final String TAG = MapsActivity.class.getSimpleName();
@@ -62,7 +59,7 @@ public class MapsActivity extends FragmentActivity implements
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)        // 10 seconds, in milliseconds
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+
     }
 
     @Override
@@ -189,15 +186,7 @@ public class MapsActivity extends FragmentActivity implements
             Log.i(TAG, "Location services connection failed with code " + connectionResult.getErrorCode());
         }
     }
-    public void WriteToDatabase(LatLng thisLocation){
-        LocationModel theModel = new LocationModel(thisLocation,this.emailAddress);
-        try{
-            mDatabase.child("app/gps/DUMMY_SENDER").setValue(theModel); //TODO:Add some of this to strings.xml
-        }
-        catch(Exception e){
-            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
-        }
-    }
+
     @Override
     public void onLocationChanged(Location location) {
         handleNewLocation(location);
