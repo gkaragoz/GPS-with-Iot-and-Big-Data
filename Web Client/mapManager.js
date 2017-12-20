@@ -8,7 +8,7 @@ function initMap(){
   //Set map options
   //Sakarya 40.775384° N, 30.366367° E
   //Get new map instance
-  var map = new google.maps.Map(document.getElementById('map', options), {
+  map = new google.maps.Map(document.getElementById('map', options), {
     zoom:12,
     center:{lat:40.775384,lng:30.366367}
   });
@@ -24,11 +24,6 @@ function createFlightDraw(locations, color) {
 
   var centerLat = (flightPlanCoordinates[0].lat + flightPlanCoordinates[1].lat) / 2;
   var centerLng = (flightPlanCoordinates[0].lng + flightPlanCoordinates[1].lng) / 2;
-
-  var map = new google.maps.Map(document.getElementById('map', options), {
-    zoom:12,
-    center:{lat:centerLat,lng:centerLng}
-  });
 
   var flightPath = new google.maps.Polyline({
     path: flightPlanCoordinates,
