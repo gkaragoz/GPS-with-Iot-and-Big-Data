@@ -8,26 +8,26 @@ import java.util.List;
  */
 
 public class UserModel {
-    public List<ActionModel> actions;
+    public List<ActivityModel> activities;
     public String age;
     public String email;
     public String gender;
     public String name;
     public UserModel(){
-        if(this.actions == null)
-            actions = new ArrayList<>(); //This is just for precaution.
+        if(this.activities == null)
+            this.activities = new ArrayList<>(); //This is just for precaution.
     }
     public UserModel(String age, String email, String gender, String name){
-        if(this.actions == null)
-            actions = new ArrayList<>();
+        if(this.activities == null)
+            this.activities = new ArrayList<>();
         this.age = age;
         this.email = email;
         this.gender = gender;
         this.name = name;
     }
-    public void AddAction(ActionModel newAction){
+    public void AddActionModel(ActivityModel newAction){
         if(newAction != null){
-            actions.add(newAction);
+            this.activities.add(newAction);
         }
         else{
             //Don't know what to do, continue.

@@ -7,11 +7,11 @@ import java.util.List;
  * Sub class for firebase
  */
 
-public class ActionModel {
+public class ActivityModel {
     public List<LocationModel> locations;
     public double totalDistance; //In kilometer
     public double totalTime; // In minutes
-    public ActionModel(){
+    public ActivityModel(){
         locations = new ArrayList<>();
         CalculateDistance();
         CalculateTime();
