@@ -1,8 +1,6 @@
 package com.iotbigdata.illegaldisease.androidclient;
 
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -10,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.util.Patterns;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -26,8 +23,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.regex.Pattern;
 
 public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
@@ -197,11 +192,9 @@ public class MapsActivity extends FragmentActivity implements
     public void WriteToDatabase(LatLng thisLocation){
         LocationModel theModel = new LocationModel(thisLocation,this.emailAddress);
         try{
-            mDatabase.child("app/gps/DUMMY_SENDER").setValue(theModel);
-            Toast.makeText(this,"Location should be added",Toast.LENGTH_LONG).show();
+            mDatabase.child("app/gps/DUMMY_SENDER").setValue(theModel); //TODO:Add some of this to strings.xml
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
             Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
@@ -210,15 +203,5 @@ public class MapsActivity extends FragmentActivity implements
         handleNewLocation(location);
     }
 
-    private String getEmail(){
-        String currentEmail = "Anonymous";
-        Pattern gmailPattern = Patterns.EMAIL_ADDRESS;
-        Account[] accounts = AccountManager.get(this).getAccounts();
-        for (Account account : accounts) {
-            if (gmailPattern.matcher(account.name).matches()) {
-                currentEmail = account.name;
-            }
-        }
-        return currentEmail;
-    }
+
 }
