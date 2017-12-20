@@ -7,57 +7,40 @@ var map;
 function initMap(){
   //Set map options
   //Sakarya 40.775384° N, 30.366367° E
-  options = {
+  //Get new map instance
+  map = new google.maps.Map(document.getElementById('map', options), {
     zoom:12,
     center:{lat:40.775384,lng:30.366367}
-  }
-
-  //Get new map instance
-  map = new google.maps.Map(document.getElementById('map'), options);
+  });
 }
 
-//Add marker function
-function addMapMarker(props){
-  var marker = new google.maps.Marker({
-    position:props.coords,
-    map:map,
-    icon: {
-      path: google.maps.SymbolPath.CIRCLE,
-      scale: 10,
-      fillColor: getRandomColor(),
-    fillOpacity: 0.8,
-    scale: 10,
-    strokeColor: getRandomColor(),
-    strokeWeight: 1
-    }
-    //icon:props.iconImage
+function createFlightDraw(locations, color) {
+  var flightPlanCoordinates = [];
+
+  for (var i = 0; i < locations.length; i++) {
+    var coordinate = {lat: locations[i].lat, lng: locations[i].lng};
+    flightPlanCoordinates.push(coordinate);
+  }
+
+  var centerLat = (flightPlanCoordinates[0].lat + flightPlanCoordinates[1].lat) / 2;
+  var centerLng = (flightPlanCoordinates[0].lng + flightPlanCoordinates[1].lng) / 2;
+
+  var flightPath = new google.maps.Polyline({
+    path: flightPlanCoordinates,
+    geodesic: true,
+    strokeColor: color,
+    strokeOpacity: 1.0,
+    strokeWeight: 2
   });
 
-  //Check for custom icon
-  if(props.iconImage){
-    //Set icon image
-    marker.setIcon(props.iconImage);
-  }
-
-  //Check content for info window
-  if (props.content){
-    var infoWindow = new google.maps.InfoWindow({
-      content:props.content
-    });
-
-    marker.addListener('click', function(){
-      infoWindow.open(map, marker);
-    });
-  }
+  flightPath.setMap(map);
 }
 
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+function setMapCenter(zoomLevel, location) {
+  var map = new google.maps.Map(document.getElementById('map', options), {
+    zoom:zoomLevel,
+    center:{lat:location.lat,lng:location.lng}
+  });
 }
 
 function generateMapLocation() {
@@ -72,4 +55,8 @@ function generateMapLocation() {
 
   console.log("Random value generated: " + "lat: " + lat + " lng: " + lng);
   return location;
+}
+
+function getRandomInRange(from, to, fixed) {
+    return (Math.random() * (to - from) + from);
 }

@@ -52,48 +52,66 @@ function getFirebaseUserData(){
     var dataSize = Object.keys(stringifiedData).length;
     var parsedData = JSON.parse(stringifiedData);
 
-    var gps = parsedData.app.gps;
-    for (var i = 0; i < Object.keys(gps).length; i++) {
-      var sender = Object.keys(parsedData.app.gps)[i];
-      var locations = gps[sender];
+    var gps = parsedData.gps;
+    var users = gps.users;
 
-      for (var j = 0; j < Object.keys(locations).length; j++) {
-        var singleLocation = Object.keys(locations)[j];
-        var data = locations[singleLocation];
+    for (var i = 0; i < users.length; i++) {
+      var parsedLocations = [];
+      var parsedActivities = [];
 
-        var lat = data.lat;
-        var lng = data.lng;
-        var timestamp = data.timestamp;
-        var content = "Lat: " + lat + " Lng: " + lng;
+      var user = users[i];
+      var email = user.email;
+      var name = user.name;
+      var age = user.age;
+      var gender = user.gender;
+      var activities = user.activities;
 
-        var markerData = {
-          "sender":sender,
-          coords:{"lat":lat, "lng":lng},
-          "content":content
-        };
+      for (var j = 0; j < activities.length; j++) {
+        var activity = activities[j];
+        var location = activity.locations;
+        var totalDistance = activity.totalDistance;
+        var totalTime = activity.totalTime;
 
-                /////////////////////////////
-                //////////CHECK THIS/////////
-                /////////////////////////////
-                // console.log(markerData);
-                // if (containsObject(markerData, clientLocations))
-                // {
-                //     console.log("Contains");
-                // }
-                // else {
-                //   console.log("Non contains");
-                // }
-                /////////////////////////////
-                //////////CHECK THIS/////////
-                /////////////////////////////
-         clientLocations.push(markerData);
-         addMapMarker(markerData);
+        for (var k = 0; k < location.length; k++) {
+          var lat = location[k].lat;
+          var lng = location[k].lng;
+          var timestamp = location[k].timestamp;
+
+          var parsedLocation = new Location(lat, lng, timestamp);
+          parsedLocations.push(parsedLocation);
+        }
+        var parsedActivity = new Activity(parsedLocations, totalDistance, totalTime);
+        parsedActivities.push(parsedActivity);
+        parsedLocations = [];
       }
+      var user = new User(email, name, age, gender, parsedActivities);
+      gpsUsers.push(user);
     }
 
+    DrawEverything();
+
     console.log("[info] User datas have been got: " + dataSize + " byte");
-    //Add list in main.js
     return parsedData;
+  });
+}
+
+function listenFirebase() {
+  var ref = firebase.database().ref('/gps/');
+  //I am doing a child based listener, but you can use .once('value')...
+  ref.on('child_added', function(data) {
+     //data.key will be like -KPmraap79lz41FpWqLI
+     // addNewTaskView(data.key, data.val().title);
+     console.log("Child added: " + data.key + " " + data.val().title);
+  });
+
+  ref.on('child_changed', function(data) {
+     // updateTaskView(data.key, data.val().title);
+     console.log("Child changed: " + data.key + " " + data.val().title);
+  });
+
+  ref.on('child_removed', function(data) {
+     // removeTaskView(data.key, data.val().title);
+     console.log("Child removed: " + data.key + " " + data.val().title);
   });
 }
 
