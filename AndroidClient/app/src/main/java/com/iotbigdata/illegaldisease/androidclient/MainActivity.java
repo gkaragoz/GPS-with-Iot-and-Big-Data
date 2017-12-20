@@ -22,14 +22,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.file.attribute.GroupPrincipal;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
-    private String currentEmail;
-    private UserModel currentUserModel; //Sets a new user, or overwrites existing user.
+    private String currentEmail; //Will be written as Anonymous0, Anonymous1 etc for conflicts. See getUserIndex() for more.
+    private GpsModel currentGpsModel; //Sets a new user, or overwrites existing user.
     private DatabaseReference mDatabase;
-    JSONArray jArray; //Value from child, we know it is array.
+    private int userIndex; //Array index of our user. Some problems at anonymous users.
 
     Button goMapsButton;
     @Override
@@ -37,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         InitializeValues();
-        final int indexOfUser = getIndexOfUser();
-        //WriteToDatabase();
+
     }
     private void InitializeValues(){
         currentEmail = getEmail();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        InitializeUserModel();
-        goMapsButton = (Button) findViewById(R.id.button_mainGoMaps);
+        ReadFromDatabase();
+
+        goMapsButton = findViewById(R.id.button_mainGoMaps);
 
         goMapsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private String getEmail(){
-        String currentEmail = getString(R.string.InitialEmail);
+        String currentEmail = getString(R.string.InitialEmail); //Anonymous
         Pattern gmailPattern = Patterns.EMAIL_ADDRESS;
         Account[] accounts = AccountManager.get(this).getAccounts();
         for (Account account : accounts) {
@@ -66,19 +67,15 @@ public class MainActivity extends AppCompatActivity {
         }
         return currentEmail;
     }
-    private int getIndexOfUser(){
-        //If it doesn't find an index, returns last+1 index so it can create one.
-        int theIndex = -1; //Initial value, -1 means absolute no-go, check it when you use the function.
-        DatabaseReference childRef = mDatabase.child("gps/users");
+    private void ReadFromDatabase(){ //And assign it to currentGpsModel
+        DatabaseReference childRef = mDatabase.child("gps");
         childRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                try {
-                    jArray = new JSONArray(dataSnapshot.getValue().toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                    currentGpsModel = dataSnapshot.getValue(GpsModel.class);
+                    AddDummyLocation();
+                    WriteToDatabase();
+                    int currentLength = currentGpsModel.users.size();
             }
 
             @Override
@@ -86,21 +83,21 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        return theIndex;
     }
-    private void InitializeUserModel(){
-        currentUserModel = new UserModel("23",this.currentEmail,"male","blablabla");
+    private void AddDummyLocation(){
+        UserModel currentUserModel = new UserModel("23",this.currentEmail,"koala","24352334");
         ActivityModel currentActivityModel = new ActivityModel();
-        LocationModel currentLoocationModel = new LocationModel(new LatLng(-40.742632,30.12372));
-        LocationModel currentLoocationModel2 = new LocationModel(new LatLng(-40.742876,30.13372));
-        currentActivityModel.AddLocationModel(currentLoocationModel);
-        currentActivityModel.AddLocationModel(currentLoocationModel2);
+        LocationModel currentLocationModel = new LocationModel(new LatLng(-10.742632,0.12372));
+        LocationModel currentLocationModel2 = new LocationModel(new LatLng(-30.742876,100.13372));
+        currentActivityModel.AddLocationModel(currentLocationModel);
+        currentActivityModel.AddLocationModel(currentLocationModel2);
         currentUserModel.AddActionModel(currentActivityModel);
+        currentGpsModel.AddUser(currentUserModel);
 
     }
     public void WriteToDatabase(){
         try{
-           mDatabase.child("gps/users").setValue(currentUserModel); //TODO:Add some of this to strings.xml
+           mDatabase.child("gps").setValue(currentGpsModel); //TODO:Add some of this to strings.xml
 
         }
         catch(Exception e){
