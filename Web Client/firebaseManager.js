@@ -52,25 +52,52 @@ function getFirebaseUserData(){
     var dataSize = Object.keys(stringifiedData).length;
     var parsedData = JSON.parse(stringifiedData);
 
-    var gps = parsedData.app.gps;
+    var gps = parsedData.gps;
     for (var i = 0; i < Object.keys(gps).length; i++) {
-      var sender = Object.keys(parsedData.app.gps)[i];
-      var locations = gps[sender];
+      var email = gps.user.email;
+      var name = gps.user.name;
+      var age = gps.user.age;
+      var gender = gps.user.gender;
 
-      for (var j = 0; j < Object.keys(locations).length; j++) {
-        var singleLocation = Object.keys(locations)[j];
-        var data = locations[singleLocation];
+      var activities = gps.user.activity;
+      console.log(activities);
 
-        var lat = data.lat;
-        var lng = data.lng;
-        var timestamp = data.timestamp;
-        var content = "Lat: " + lat + " Lng: " + lng;
+      for (var j = 0; j < Object.keys(activities).length; j++) {
+        var activity = activities[j];
+        var timestamp = Object.keys(activity)[j];
+        var lat = activity[timestamp].lat;
+        var lng = activity[timestamp].lng;
+        var totalDistance = activity.totalDistance;
+        var totalTime = activity.totalTime;
 
-        var markerData = {
-          "sender":sender,
-          coords:{"lat":lat, "lng":lng},
-          "content":content
-        };
+        console.log(activity);
+        console.log(timestamp);
+        console.log(lat);
+        console.log(lng);
+        console.log(totalDistance);
+        console.log(totalTime);
+      }
+    }
+
+    // var gps = parsedData.app.gps;
+    // for (var i = 0; i < Object.keys(gps).length; i++) {
+    //   var sender = Object.keys(parsedData.app.gps)[i];
+    //   var locations = gps[sender];
+    //
+    //   for (var j = 0; j < Object.keys(locations).length; j++) {
+    //     var singleLocation = Object.keys(locations)[j];
+    //     var data = locations[singleLocation];
+    //
+    //     var lat = data.lat;
+    //     var lng = data.lng;
+    //     var timestamp = data.timestamp;
+    //     var content = "Lat: " + lat + " Lng: " + lng;
+    //
+    //     var markerData = {
+    //       "sender":sender,
+    //       coords:{"lat":lat, "lng":lng},
+    //       "content":content
+    //     };
 
                 /////////////////////////////
                 //////////CHECK THIS/////////
@@ -86,10 +113,10 @@ function getFirebaseUserData(){
                 /////////////////////////////
                 //////////CHECK THIS/////////
                 /////////////////////////////
-         clientLocations.push(markerData);
-         addMapMarker(markerData);
-      }
-    }
+         // clientLocations.push(markerData);
+         // addMapMarker(markerData);
+      // }
+    // }
 
     console.log("[info] User datas have been got: " + dataSize + " byte");
     //Add list in main.js
