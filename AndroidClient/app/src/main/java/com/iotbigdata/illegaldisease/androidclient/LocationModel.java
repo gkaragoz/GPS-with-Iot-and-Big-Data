@@ -13,22 +13,20 @@ import java.util.regex.Pattern;
  * This is class structure for firebase. Will act as JSON.
  */
 
-public class FirebaseModel {
+public class LocationModel {
     public double lat;
     public double lng;
     public double timestamp;
-    public String email;
-    public FirebaseModel(){
+    public LocationModel(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
-    public FirebaseModel(LatLng currentLocation, String email){
+    public LocationModel(LatLng currentLocation, String email){
 
         if(currentLocation == null) {
             this.lat = currentLocation.latitude;
             this.lng = currentLocation.longitude;
         }
-            timestamp = System.currentTimeMillis()/1000;
-        this.email = email; //It wont come as null, it will return as "Anonymous" if nothing is found.
+        this.timestamp = System.currentTimeMillis()/1000;
     }
 
 }

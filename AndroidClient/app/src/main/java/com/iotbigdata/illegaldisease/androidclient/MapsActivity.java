@@ -3,7 +3,6 @@ package com.iotbigdata.illegaldisease.androidclient;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.content.Context;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -136,7 +135,6 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onConnected(Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -148,7 +146,6 @@ public class MapsActivity extends FragmentActivity implements
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location == null) {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
                 // here to request the missing permissions, and then overriding
                 //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -198,7 +195,7 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
     public void WriteToDatabase(LatLng thisLocation){
-        FirebaseModel theModel = new FirebaseModel(thisLocation,this.emailAddress);
+        LocationModel theModel = new LocationModel(thisLocation,this.emailAddress);
         try{
             mDatabase.child("app/gps/DUMMY_SENDER").setValue(theModel);
             Toast.makeText(this,"Location should be added",Toast.LENGTH_LONG).show();
