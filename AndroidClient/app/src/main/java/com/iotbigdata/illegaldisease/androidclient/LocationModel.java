@@ -20,9 +20,9 @@ public class LocationModel {
     public LocationModel(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
-    public LocationModel(LatLng currentLocation, String email){
+    public LocationModel(LatLng currentLocation){
 
-        if(currentLocation == null) {
+        if(currentLocation != null) {
             this.lat = currentLocation.latitude;
             this.lng = currentLocation.longitude;
         }
