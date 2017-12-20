@@ -48,6 +48,8 @@ function getFirebaseUserData(){
     if (snapshot.val() == null)
       return;
 
+    var parsedActivities = [];
+
     var stringifiedData = JSON.stringify(snapshot.val());
     var dataSize = Object.keys(stringifiedData).length;
     var parsedData = JSON.parse(stringifiedData);
@@ -58,9 +60,7 @@ function getFirebaseUserData(){
       var name = gps.user.name;
       var age = gps.user.age;
       var gender = gps.user.gender;
-
       var activities = gps.user.activity;
-      console.log(activities);
 
       for (var j = 0; j < Object.keys(activities).length; j++) {
         var activity = activities[j];
@@ -70,56 +70,18 @@ function getFirebaseUserData(){
         var totalDistance = activity.totalDistance;
         var totalTime = activity.totalTime;
 
-        console.log(activity);
-        console.log(timestamp);
-        console.log(lat);
-        console.log(lng);
-        console.log(totalDistance);
-        console.log(totalTime);
+        var parsedActivity = new Activity(timestamp, lat, lng, totalDistance, totalTime);
+        parsedActivities.push(parsedActivity);
       }
+      var user = new User(email, name, age, gender, parsedActivities);
+      users.push(user);
     }
 
-    // var gps = parsedData.app.gps;
-    // for (var i = 0; i < Object.keys(gps).length; i++) {
-    //   var sender = Object.keys(parsedData.app.gps)[i];
-    //   var locations = gps[sender];
-    //
-    //   for (var j = 0; j < Object.keys(locations).length; j++) {
-    //     var singleLocation = Object.keys(locations)[j];
-    //     var data = locations[singleLocation];
-    //
-    //     var lat = data.lat;
-    //     var lng = data.lng;
-    //     var timestamp = data.timestamp;
-    //     var content = "Lat: " + lat + " Lng: " + lng;
-    //
-    //     var markerData = {
-    //       "sender":sender,
-    //       coords:{"lat":lat, "lng":lng},
-    //       "content":content
-    //     };
-
-                /////////////////////////////
-                //////////CHECK THIS/////////
-                /////////////////////////////
-                // console.log(markerData);
-                // if (containsObject(markerData, clientLocations))
-                // {
-                //     console.log("Contains");
-                // }
-                // else {
-                //   console.log("Non contains");
-                // }
-                /////////////////////////////
-                //////////CHECK THIS/////////
-                /////////////////////////////
-         // clientLocations.push(markerData);
-         // addMapMarker(markerData);
-      // }
-    // }
+    for (var i = 0; i < users.length; i++) {
+      users[i].Display();
+    }
 
     console.log("[info] User datas have been got: " + dataSize + " byte");
-    //Add list in main.js
     return parsedData;
   });
 }

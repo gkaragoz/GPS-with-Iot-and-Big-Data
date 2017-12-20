@@ -1,4 +1,5 @@
 var clientLocations = [];
+var users = [];
 
 function initApplication(){
   initMap();
