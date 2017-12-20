@@ -22,8 +22,6 @@ function createFlightDraw(locations, color) {
     flightPlanCoordinates.push(coordinate);
   }
 
-  console.log(flightPlanCoordinates);
-
   var centerLat = (flightPlanCoordinates[0].lat + flightPlanCoordinates[1].lat) / 2;
   var centerLng = (flightPlanCoordinates[0].lng + flightPlanCoordinates[1].lng) / 2;
 
