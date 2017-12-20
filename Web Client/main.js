@@ -4,7 +4,6 @@ var gpsUsers = [];
 function initApplication(){
   initMap();
   initFirebase();
-  initCustomUIManager();
 
   getFirebaseUserData();
 }

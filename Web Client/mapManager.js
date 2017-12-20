@@ -7,13 +7,27 @@ var map;
 function initMap(){
   //Set map options
   //Sakarya 40.775384° N, 30.366367° E
-  options = {
+  //Get new map instance
+  var map = new google.maps.Map(document.getElementById('map', options), {
     zoom:12,
     center:{lat:40.775384,lng:30.366367}
-  }
+  });
 
-  //Get new map instance
-  map = new google.maps.Map(document.getElementById('map'), options);
+  var flightPlanCoordinates = [
+    {lat: 40.775384, lng: 30.366367},
+    {lat: 21.291, lng: -157.821},
+    {lat: -18.142, lng: 178.431},
+    {lat: -27.467, lng: 153.027}
+  ];
+  var flightPath = new google.maps.Polyline({
+    path: flightPlanCoordinates,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+
+  flightPath.setMap(map);
 }
 
 //Add marker function
