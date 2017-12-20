@@ -14,7 +14,7 @@ function initMap(){
   });
 }
 
-function createFlightDraw(locations) {
+function createFlightDraw(locations, color) {
   var flightPlanCoordinates = [];
 
   for (var i = 0; i < locations.length; i++) {
@@ -33,7 +33,7 @@ function createFlightDraw(locations) {
   var flightPath = new google.maps.Polyline({
     path: flightPlanCoordinates,
     geodesic: true,
-    strokeColor: '#FF0000',
+    strokeColor: color,
     strokeOpacity: 1.0,
     strokeWeight: 2
   });

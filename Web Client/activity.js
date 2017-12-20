@@ -6,7 +6,6 @@ class Activity {
   }
 
   Display() {
-    console.log(this.locations.length + " Locations found: ");
     for (var i = 0; i < this.locations.length; i++) {
       this.locations[i].Display();
     }

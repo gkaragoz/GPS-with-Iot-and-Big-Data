@@ -5,6 +5,8 @@ function initApplication(){
   initMap();
   initFirebase();
 
+  getFirebaseUserData();
+
   var locations = [
       {lat:40.742525, lng:30.334567},
       {lat:40.743956, lng:30.341433},
@@ -16,9 +18,8 @@ function initApplication(){
       {lat:40.752929, lng:30.363577},
       {lat:40.756440, lng:30.364092}
   ];
-  createFlightDraw(locations);
 
-  getFirebaseUserData();
+  createFlightDraw(locations, Colors.GREEN);
 }
 
         /////////////////////////////

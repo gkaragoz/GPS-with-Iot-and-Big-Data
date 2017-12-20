@@ -18,8 +18,12 @@ class User {
       this.activities[i].Display();
     }
   }
-  
+
   GetActivitiesCount() {
     return this.activities.length;
+  }
+
+  GetLocationsCount() {
+    return this.activities.GetLocationsCount();
   }
 }
