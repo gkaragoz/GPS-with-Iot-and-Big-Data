@@ -95,35 +95,26 @@ function getFirebaseUserData(){
   });
 }
 
-function listenFirebase() {
-  var ref = firebase.database().ref('/gps/');
-  //I am doing a child based listener, but you can use .once('value')...
-  ref.on('child_added', function(data) {
-     //data.key will be like -KPmraap79lz41FpWqLI
-     // addNewTaskView(data.key, data.val().title);
-     console.log("Child added: " + data.key + " " + data.val().title);
-  });
+function writeFirebaseUserData(data, userNumber) {
+  firebase.database().ref('gps/users/' + 2).set(data);
 
-  ref.on('child_changed', function(data) {
-     // updateTaskView(data.key, data.val().title);
-     console.log("Child changed: " + data.key + " " + data.val().title);
-  });
-
-  ref.on('child_removed', function(data) {
-     // removeTaskView(data.key, data.val().title);
-     console.log("Child removed: " + data.key + " " + data.val().title);
-  });
+  console.log("[info] Data has been written: " + JSON.stringify(data));
 }
 
-function writeFirebaseUserData(data) {
-  // Get a reference to the database service
+function getFirebaseLastUserNumber(callback) {
   var databaseRef = firebase.database().ref();
-  var locationsRef = databaseRef.child('app/gps/' + data.sender);
-  var newDataRef = locationsRef.push();
-  newDataRef.set({
-    timestamp: data.timestamp,
-    lat: data.lat,
-    lng: data.lng
+  databaseRef.on('value', function(snapshot) {
+    if (snapshot.val() == null)
+      return;
+
+    var stringifiedData = JSON.stringify(snapshot.val());
+    var dataSize = Object.keys(stringifiedData).length;
+    var parsedData = JSON.parse(stringifiedData);
+    var gps = parsedData.gps;
+    var users = gps.users;
+
+    var response = Object.keys(users)[users.length-1];
+    if (callback)
+      callback(response);
   });
-  console.log("[info] Data has been written: " + JSON.stringify(data));
 }

@@ -17,6 +17,11 @@ function initMap(){
 function createFlightDraw(locations, color) {
   var flightPlanCoordinates = [];
 
+  if (locations.length <= 1)
+  {
+    console.log("I couldn't draw!!!");
+  }
+
   for (var i = 0; i < locations.length; i++) {
     var coordinate = {lat: locations[i].lat, lng: locations[i].lng};
     flightPlanCoordinates.push(coordinate);
@@ -57,6 +62,11 @@ function generateMapLocation() {
   return location;
 }
 
-function getRandomInRange(from, to, fixed) {
+function getRandomInRange(from, to) {
     return (Math.random() * (to - from) + from);
+}
+
+function getRandomInRangeFixed(from, to, fixed) {
+    return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+    // .toFixed() returns string, so ' * 1' is a trick to convert to number
 }

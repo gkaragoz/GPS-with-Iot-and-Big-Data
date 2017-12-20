@@ -32,7 +32,7 @@ class User {
         parsedLocations.push(location);
       }
     }
-    return locations;
+    return parsedLocations;
   }
 
   GetActivitiesCount() {
