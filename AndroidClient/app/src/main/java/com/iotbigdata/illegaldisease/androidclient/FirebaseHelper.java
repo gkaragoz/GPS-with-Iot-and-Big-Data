@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
  */
 
 public class FirebaseHelper extends Application{
+    public static boolean isActive; //Holds the value if client is running or starting.
     public static String emailAddress;
     public static String gender;
     public static String age;
@@ -45,17 +46,40 @@ public class FirebaseHelper extends Application{
     }
 
     public void InitializeModels(List<LatLng> newLocations){
-        UserModel currentUserModel = new UserModel(age,emailAddress,gender,name); //Care about nullpointer.
-        ActivityModel currentActivityModel = new ActivityModel();
+        if(currentGpsModel == null){
+            currentGpsModel = new GpsModel();
+        }
+        UserModel currentUserModel;
+        if(currentGpsModel.users.size() == 0){
+            currentUserModel = new UserModel(age,emailAddress,gender,name);
+        }
+        else{
+            FirebaseHelper.currentIndex = currentGpsModel.GetUserIndex(emailAddress);
+            if(FirebaseHelper.currentIndex > 0){
+                currentUserModel = currentGpsModel.users.get(FirebaseHelper.currentIndex);
+            }
+            else{
+                currentUserModel = new UserModel(age,emailAddress,gender,name);
+            }
+
+        }
+        ActivityModel currentActivityModel;
+        if(isActive){
+            if(currentUserModel.activities == null){
+                currentActivityModel = new ActivityModel(); //It may be first data.
+            }
+            else{
+                currentActivityModel = currentUserModel.activities.get(currentUserModel.activities.size()-1); //Get last index of activities.
+            }
+        }
+        else{
+            currentActivityModel = new ActivityModel();
+        }
         for(LatLng location : newLocations){
             currentActivityModel.AddLocationModel(new LocationModel(location));
         }
         currentUserModel.AddActivityModel(currentActivityModel);
-        if(currentGpsModel == null){
-            currentGpsModel = new GpsModel();
-        }
-        currentGpsModel.AddUser(currentUserModel);
-
+        currentGpsModel.AddUser(currentUserModel);//Care about null pointer.
     }
     public void WriteToDatabase(){
         try{

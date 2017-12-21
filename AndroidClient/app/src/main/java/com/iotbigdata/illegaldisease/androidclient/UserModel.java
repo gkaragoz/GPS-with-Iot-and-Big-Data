@@ -24,7 +24,7 @@ public class UserModel {
         this.name = name;
     }
     public void AddActivityModel(ActivityModel newActivity){
-        if(newActivity == null)
+        if(activities == null)
             activities = new ArrayList<>();
         activities.add(newActivity);
     }

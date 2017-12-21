@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -30,6 +32,8 @@ public class MapsActivity extends FragmentActivity implements
 
     public List<LatLng> locations;
 
+    public Button startStopButton;
+
     public static final String TAG = MapsActivity.class.getSimpleName();
 
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
@@ -49,6 +53,9 @@ public class MapsActivity extends FragmentActivity implements
         InitializeValues();
     }
     public void InitializeValues(){
+        locations = new ArrayList<>();
+        helper = new FirebaseHelper();
+        FirebaseHelper.isActive = false;
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -58,10 +65,23 @@ public class MapsActivity extends FragmentActivity implements
         // Create the LocationRequest object
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
+                .setInterval(2 * 1000)        // 10 seconds, in milliseconds
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
-        locations = new ArrayList<>();
-        helper = new FirebaseHelper();
+        startStopButton = findViewById(R.id.buttonStartStop);
+        startStopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseHelper.isActive = !FirebaseHelper.isActive;
+                if(FirebaseHelper.isActive){
+                    startStopButton.setText(R.string.ButtonStop);
+                }
+                else{
+                    startStopButton.setText(R.string.ButtonStart);
+                }
+
+            }
+        });
+
     }
     @Override
     protected void onResume() {
@@ -168,7 +188,9 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onLocationChanged(Location location) {
-        handleNewLocation(location);
+        if(FirebaseHelper.isActive){
+            handleNewLocation(location);
+        }
     }
 
 

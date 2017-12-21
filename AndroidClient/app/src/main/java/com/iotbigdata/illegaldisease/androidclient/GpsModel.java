@@ -21,8 +21,10 @@ public class GpsModel{
          */
         int newUserIndex = GetUserIndex(newUser.email);
         if(newUser.email.equals("Anonymous")){ //TODO : I couldnt get R.string.initialEmail :(
-            if(newUserIndex == -1)
+            if(newUserIndex == -1){
                 newUser.email += users.size(); //Absolute first time.
+                FirebaseHelper.currentIndex = users.size();
+            }
             else
                 newUser.email += newUserIndex; //Anonymous will be Anonymous1 for example.
         }
@@ -35,12 +37,10 @@ public class GpsModel{
             FirebaseHelper.currentIndex = newUserIndex;
         }
     }
-    private int GetUserIndex(String paramEmail){
-        /**
-         * If exists, return index. If doesn't, return -1
-         */
+    public int GetUserIndex(String paramEmail){
         for(int currentIndex = 0; currentIndex < users.size(); currentIndex++){
             if(paramEmail.equals(users.get(currentIndex).email)){
+                FirebaseHelper.currentIndex = currentIndex;
                 return currentIndex;
             }
         }
