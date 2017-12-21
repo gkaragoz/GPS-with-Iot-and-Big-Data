@@ -67,8 +67,8 @@ class User {
       "name": this.name,
       "age": this.age,
       "gender": this.gender,
-      "totalTime": this.totalTime,
-      "totalDistance": this.totalDistance,
+      "totalTime": this.activities[0].GetTotalTime(),
+      "totalDistance": this.activities[0].GetTotalDistance(),
       "title": this.name + " (" + this.age + ")"
     };
 

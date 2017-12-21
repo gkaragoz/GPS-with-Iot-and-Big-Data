@@ -16,4 +16,12 @@ class Activity {
   GetLocationsCount() {
     return this.locations.length;
   }
+
+  GetTotalDistance() {
+    return this.totalDistance;
+  }
+
+  GetTotalTime() {
+    return this.totalTime;
+  }
 }
