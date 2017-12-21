@@ -14,23 +14,18 @@ public class UserModel {
     public String gender;
     public String name;
     public UserModel(){
-        if(this.activities == null)
-            this.activities = new ArrayList<>(); //This is just for precaution.
+
     }
     public UserModel(String age, String email, String gender, String name){
-        if(this.activities == null)
-            this.activities = new ArrayList<>();
+        this.activities = new ArrayList<>();
         this.age = age;
         this.email = email;
         this.gender = gender;
         this.name = name;
     }
-    public void AddActionModel(ActivityModel newAction){
-        if(newAction != null){
-            this.activities.add(newAction);
-        }
-        else{
-            //Don't know what to do, continue.
-        }
+    public void AddActivityModel(ActivityModel newActivity){
+        if(newActivity == null)
+            activities = new ArrayList<>();
+        activities.add(newActivity);
     }
 }
