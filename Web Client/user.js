@@ -23,21 +23,35 @@ class User {
     var drawPath = [];
 
     var locations = this.GetLocations();
-    console.log(locations);
     var currentActivity = locations[0].activityID;
+
+    if (locations == undefined)
+    {
+      console.log("Draw failed!");
+      return;
+    }
 
     for (var i = 0; i < locations.length; i++) {
       var activityID = locations[i].activityID;
-
+        console.log(currentActivity);
         if (currentActivity == activityID) {
           drawPath.push({
             lat: locations[i].lat,
             lng: locations[i].lng
           });
+
+          if (i == locations.length - 1)
+          {
+            createFlightDraw(drawPath, getRandomColor());
+            drawPath = [];
+            console.log("Drew something!");
+          }
         }
         else {
           currentActivity = activityID;
           createFlightDraw(drawPath, getRandomColor());
+          drawPath = [];
+          console.log("Drew something!");
         }
     }
   }

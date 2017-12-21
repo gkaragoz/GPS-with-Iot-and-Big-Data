@@ -59,8 +59,7 @@ function getFirebaseUserData(callback){
   });
 }
 
-function writeFirebaseUserData(data) {
-  var userNumber = -1;
+function writeFirebaseUserData(data, userNumber) {
   firebase.database().ref('gps/users/' + userNumber).set(data);
 
   console.log("[info] Data has been written: " + JSON.stringify(data));

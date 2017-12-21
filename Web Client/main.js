@@ -155,4 +155,6 @@ function SendDummyData() {
       "gender" : "male",
       "name" : "gokhan"
     };
+
+    writeFirebaseUserData(data, availableUserNumber);
 }
