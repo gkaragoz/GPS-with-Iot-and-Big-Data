@@ -35,11 +35,12 @@ function createFlightDraw(locations, color) {
   flightPath.setMap(map);
 }
 
-function createMarker(location) {
+function createMarker(location, email) {
   var marker = new google.maps.Marker({
     position: location,
     map: map,
     animation: google.maps.Animation.DROP,
+    label: email,
     title: 'Hello World!'
   });
   marker.addListener('click', function toggleBounce() {
