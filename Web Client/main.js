@@ -15,7 +15,7 @@ function initApplication(){
     for (var i = 0; i < allUsers.length; i++) {
       //allUsers[i].Display();
       allUsers[i].Draw();
-    }
+    };
   });
 }
 
@@ -54,7 +54,7 @@ function parseData(data) {
 
       if(locations == undefined)
         return;
-        
+
       for (var k = 0; k < locations.length; k++) {
         var location = locations[k];
         var lat = location.lat;
@@ -73,20 +73,6 @@ function parseData(data) {
     parsedActivities = [];
   }
 }
-
-/*
-      var parsedLocation = new Location(lat, lng, timestamp);
-      parsedLocations.push(parsedLocation);
-    }
-    var parsedActivity = new Activity(parsedLocations, totalDistance, totalTime);
-    parsedActivities.push(parsedActivity);
-    parsedLocations = [];
-  }
-  var user = new User(email, name, age, gender, parsedActivities);
-  gpsUsers.push(user);
-}
-
-*/
 
 function SendDummyData() {
   var data =
