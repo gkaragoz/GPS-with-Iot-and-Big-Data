@@ -42,7 +42,7 @@ function initFirebase(){
   });
 }
 
-function getFirebaseUserData(){
+function getFirebaseUserData(callback){
   var databaseRef = firebase.database().ref();
   databaseRef.on('value', function(snapshot) {
     if (snapshot.val() == null)
@@ -51,70 +51,17 @@ function getFirebaseUserData(){
     var stringifiedData = JSON.stringify(snapshot.val());
     var dataSize = Object.keys(stringifiedData).length;
     var parsedData = JSON.parse(stringifiedData);
-
-    var gps = parsedData.gps;
-    var users = gps.users;
-
-    for (var i = 0; i < users.length; i++) {
-      var parsedLocations = [];
-      var parsedActivities = [];
-
-      var user = users[i];
-      var email = user.email;
-      var name = user.name;
-      var age = user.age;
-      var gender = user.gender;
-      var activities = user.activities;
-
-      for (var j = 0; j < activities.length; j++) {
-        var activity = activities[j];
-        var location = activity.locations;
-        var totalDistance = activity.totalDistance;
-        var totalTime = activity.totalTime;
-
-        for (var k = 0; k < location.length; k++) {
-          var lat = location[k].lat;
-          var lng = location[k].lng;
-          var timestamp = location[k].timestamp;
-
-          var parsedLocation = new Location(lat, lng, timestamp);
-          parsedLocations.push(parsedLocation);
-        }
-        var parsedActivity = new Activity(parsedLocations, totalDistance, totalTime);
-        parsedActivities.push(parsedActivity);
-        parsedLocations = [];
-      }
-      var user = new User(email, name, age, gender, parsedActivities);
-      gpsUsers.push(user);
-    }
-
-    DrawEverything();
 
     console.log("[info] User datas have been got: " + dataSize + " byte");
-    return parsedData;
+
+    if (callback)
+      callback(parsedData);
   });
 }
 
-function writeFirebaseUserData(data, userNumber) {
-  firebase.database().ref('gps/users/' + 2).set(data);
+function writeFirebaseUserData(data) {
+  var userNumber = -1;
+  firebase.database().ref('gps/users/' + userNumber).set(data);
 
   console.log("[info] Data has been written: " + JSON.stringify(data));
-}
-
-function getFirebaseLastUserNumber(callback) {
-  var databaseRef = firebase.database().ref();
-  databaseRef.on('value', function(snapshot) {
-    if (snapshot.val() == null)
-      return;
-
-    var stringifiedData = JSON.stringify(snapshot.val());
-    var dataSize = Object.keys(stringifiedData).length;
-    var parsedData = JSON.parse(stringifiedData);
-    var gps = parsedData.gps;
-    var users = gps.users;
-
-    var response = Object.keys(users)[users.length-1];
-    if (callback)
-      callback(response);
-  });
 }

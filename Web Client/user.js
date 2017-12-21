@@ -19,6 +19,29 @@ class User {
     }
   }
 
+  Draw() {
+    var drawPath = [];
+
+    var locations = this.GetLocations();
+    console.log(locations);
+    var currentActivity = locations[0].activityID;
+
+    for (var i = 0; i < locations.length; i++) {
+      var activityID = locations[i].activityID;
+
+        if (currentActivity == activityID) {
+          drawPath.push({
+            lat: locations[i].lat,
+            lng: locations[i].lng
+          });
+        }
+        else {
+          currentActivity = activityID;
+          createFlightDraw(drawPath, getRandomColor());
+        }
+    }
+  }
+
   GetLocations() {
     var parsedLocations = [];
     for (var i = 0; i < this.activities.length; i++) {
@@ -33,13 +56,5 @@ class User {
       }
     }
     return parsedLocations;
-  }
-
-  GetActivitiesCount() {
-    return this.activities.length;
-  }
-
-  GetLocationsCount() {
-    return this.activities.GetLocationsCount();
   }
 }
