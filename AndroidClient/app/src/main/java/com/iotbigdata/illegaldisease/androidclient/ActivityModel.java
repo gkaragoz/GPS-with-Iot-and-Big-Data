@@ -13,20 +13,16 @@ public class ActivityModel {
     public double totalTime; // In minutes
     public ActivityModel(){
         locations = new ArrayList<>();
-        CalculateDistance();
-        CalculateTime();
+        totalDistance = CalculateDistance();
+        totalTime = CalculateTime();
     }
     public void AddLocationModel(LocationModel newModel){
-        if(newModel != null){
-            locations.add(newModel);
-        }
-        else{
-            //That means it couldn't add to list, maybe do something.
-        }
-
+        if(newModel == null)
+            locations = new ArrayList<>();
+        locations.add(newModel);
     }
     private double CalculateDistance(){
-        double distance = 0; //Let google help me.
+        double distance = 15; //Let google help me.
         if(this.locations.size() > 0){
             //TODO: fill here. Use PolyLine at maps activity.
         }

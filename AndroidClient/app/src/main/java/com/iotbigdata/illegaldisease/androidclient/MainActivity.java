@@ -27,11 +27,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
-    private String currentEmail; //Will be written as Anonymous0, Anonymous1 etc for conflicts. See getUserIndex() for more.
-    private GpsModel currentGpsModel; //Sets a new user, or overwrites existing user.
-    private DatabaseReference mDatabase;
-    private int userIndex; //Array index of our user. Some problems at anonymous users.
-
+    private String email;
     Button goMapsButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +37,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void InitializeValues(){
-        currentEmail = getEmail();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        ReadFromDatabase();
-
+        email = getEmail();
+        FirebaseHelper helper = new FirebaseHelper("rabbit","123456789","yasemin",email);
         goMapsButton = findViewById(R.id.button_mainGoMaps);
 
         goMapsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,MapsActivity.class);
-                //intent.putExtra("TheUserModel",currentUserModel);
                 MainActivity.this.startActivity(intent);
             }
         });
@@ -66,42 +59,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return currentEmail;
-    }
-    private void ReadFromDatabase(){ //And assign it to currentGpsModel
-        DatabaseReference childRef = mDatabase.child("gps");
-        childRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                    currentGpsModel = dataSnapshot.getValue(GpsModel.class);
-                    AddDummyLocation();
-                    WriteToDatabase();
-                    int currentLength = currentGpsModel.users.size();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-    private void AddDummyLocation(){
-        UserModel currentUserModel = new UserModel("23",this.currentEmail,"koala","24352334");
-        ActivityModel currentActivityModel = new ActivityModel();
-        LocationModel currentLocationModel = new LocationModel(new LatLng(-10.742632,0.12372));
-        LocationModel currentLocationModel2 = new LocationModel(new LatLng(-30.742876,100.13372));
-        currentActivityModel.AddLocationModel(currentLocationModel);
-        currentActivityModel.AddLocationModel(currentLocationModel2);
-        currentUserModel.AddActionModel(currentActivityModel);
-        currentGpsModel.AddUser(currentUserModel);
-
-    }
-    public void WriteToDatabase(){
-        try{
-           mDatabase.child("gps").setValue(currentGpsModel); //TODO:Add some of this to strings.xml
-
-        }
-        catch(Exception e){
-            Log.d("Weirdness","Some weird things happened, don't know it dudeee..");
-        }
     }
 }

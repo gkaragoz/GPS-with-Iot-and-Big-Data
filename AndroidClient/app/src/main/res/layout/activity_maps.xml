@@ -41,11 +41,10 @@
 
     <Button
         android:id="@+id/buttonStartStop"
-        style="@android:style/Widget.Material.Light.Button"
         android:layout_width="wrap_content"
-        android:layout_height="350px"
+        android:layout_height="400px"
         android:layout_weight="1"
-        android:text="Run" />
+        android:text="@string/ButtonStart" />
 
     <fragment
         android:id="@+id/map"
