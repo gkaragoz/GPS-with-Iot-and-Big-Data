@@ -46,6 +46,7 @@ public class FirebaseHelper extends Application{
     }
 
     public void InitializeModels(List<LatLng> newLocations){
+        boolean didCreateNewActivity = false;
         if(currentGpsModel == null){
             currentGpsModel = new GpsModel();
         }
@@ -66,19 +67,37 @@ public class FirebaseHelper extends Application{
         ActivityModel currentActivityModel;
         if(isActive){
             if(currentUserModel.activities == null){
-                currentActivityModel = new ActivityModel(); //It may be first data.
+                currentActivityModel = new ActivityModel(); //It will be first data.
+                didCreateNewActivity = true;
             }
             else{
-                currentActivityModel = currentUserModel.activities.get(currentUserModel.activities.size()-1); //Get last index of activities.
+                if(currentUserModel.activities.size() != 0){
+                    currentActivityModel = currentUserModel.activities.get(currentUserModel.activities.size()-1); //Get last index of activities.
+                }
+                else{
+                    currentActivityModel = new ActivityModel(); //No activities.
+                    didCreateNewActivity = true;
+                }
             }
         }
         else{
             currentActivityModel = new ActivityModel();
+            didCreateNewActivity = true;
         }
+        LatLng lastLocation = null;
         for(LatLng location : newLocations){
             currentActivityModel.AddLocationModel(new LocationModel(location));
+            lastLocation = location;
         }
-        currentUserModel.AddActivityModel(currentActivityModel);
+        if(!isActive && lastLocation != null && currentActivityModel.locations.size() == 1){
+            currentActivityModel.AddLocationModel(new LocationModel(lastLocation));
+        }
+        if(didCreateNewActivity){
+            currentUserModel.AddActivityModel(currentActivityModel);
+        }
+        else{
+            currentUserModel.activities.set(currentUserModel.activities.size() - 1,currentActivityModel); //If we went with the same activity, don't overwrite it.
+        }
         currentGpsModel.AddUser(currentUserModel);//Care about null pointer.
     }
     public void WriteToDatabase(){

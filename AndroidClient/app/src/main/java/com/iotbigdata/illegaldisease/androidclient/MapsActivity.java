@@ -3,12 +3,14 @@ package com.iotbigdata.illegaldisease.androidclient;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -29,7 +31,6 @@ public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener, OnMapReadyCallback {
-
     public List<LatLng> locations;
 
     public Button startStopButton;
@@ -65,8 +66,10 @@ public class MapsActivity extends FragmentActivity implements
         // Create the LocationRequest object
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(2 * 1000)        // 10 seconds, in milliseconds
+                .setInterval(2 * 1000) // 2 seconds, in milliseconds
+                .setMaxWaitTime(10000)
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
+
         startStopButton = findViewById(R.id.buttonStartStop);
         startStopButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +123,6 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 
     @Override
@@ -145,7 +147,6 @@ public class MapsActivity extends FragmentActivity implements
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
         else {
             handleNewLocation(location);
@@ -188,11 +189,9 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onLocationChanged(Location location) {
+        Toast.makeText(this,"Locaton should change",Toast.LENGTH_LONG).show();
         if(FirebaseHelper.isActive){
             handleNewLocation(location);
         }
     }
-
-
-
 }
