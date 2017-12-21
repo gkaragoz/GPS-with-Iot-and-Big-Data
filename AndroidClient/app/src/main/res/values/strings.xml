@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AndroidClient</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="InitialEmail">Anonymous</string>
+    <string name="ButtonStart">Start</string>
+    <string name="ButtonStop">Stop</string>
+    <string name="FirebaseParent">gps</string>
+</resources>
