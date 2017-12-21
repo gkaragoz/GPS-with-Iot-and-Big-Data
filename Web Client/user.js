@@ -19,6 +19,62 @@ class User {
     }
   }
 
+  Draw() {
+    var drawPath = [];
+
+    var locations = this.GetLocations();
+    var currentActivity = locations[0].activityID;
+
+    if (locations == undefined)
+    {
+      console.log("Draw failed!");
+      return;
+    }
+
+    for (var i = 0; i < locations.length; i++) {
+      var activityID = locations[i].activityID;
+        console.log(currentActivity);
+        if (currentActivity == activityID) {
+          drawPath.push({
+            lat: locations[i].lat,
+            lng: locations[i].lng
+          });
+
+          if (i == locations.length - 1)
+          {
+            createFlightDraw(drawPath, getRandomColor());
+            drawPath = [];
+            console.log("Drew something!");
+          }
+        }
+        else {
+          currentActivity = activityID;
+          createFlightDraw(drawPath, getRandomColor());
+          drawPath = [];
+          console.log("Drew something!");
+        }
+    }
+  }
+
+  Marker() {
+    var locations = this.GetLocations();
+    var location = {
+      lat: locations[0].lat,
+      lng: locations[0].lng
+    }
+    var content = {
+      "email": this.email,
+      "name": this.name,
+      "age": this.age,
+      "gender": this.gender,
+      "totalTime": this.totalTime,
+      "totalDistance": this.totalDistance,
+      "title": this.name + " (" + this.age + ")"
+    };
+
+    createMarker(location, content);
+  }
+
   GetLocations() {
     var parsedLocations = [];
     for (var i = 0; i < this.activities.length; i++) {
@@ -32,14 +88,6 @@ class User {
         parsedLocations.push(location);
       }
     }
-    return locations;
-  }
-
-  GetActivitiesCount() {
-    return this.activities.length;
-  }
-
-  GetLocationsCount() {
-    return this.activities.GetLocationsCount();
+    return parsedLocations;
   }
 }
