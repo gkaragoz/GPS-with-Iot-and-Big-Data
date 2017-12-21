@@ -35,6 +35,17 @@ function createFlightDraw(locations, color) {
   flightPath.setMap(map);
 }
 
+function createMarker(location) {
+  var marker = new google.maps.Marker({
+    position: location,
+    map: map,
+    title: 'Hello World!'
+  });
+
+  console.log("Drew marker!");
+  marker.setMap(map);
+}
+
 function setMapCenter(zoomLevel, location) {
   var map = new google.maps.Map(document.getElementById('map', options), {
     zoom:zoomLevel,

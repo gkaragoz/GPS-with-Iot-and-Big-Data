@@ -56,6 +56,16 @@ class User {
     }
   }
 
+  Marker() {
+    var locations = this.GetLocations();
+    var location = {
+      lat: locations[0].lat,
+      lng: locations[0].lng
+    }
+
+    createMarker(location);
+  }
+
   GetLocations() {
     var parsedLocations = [];
     for (var i = 0; i < this.activities.length; i++) {

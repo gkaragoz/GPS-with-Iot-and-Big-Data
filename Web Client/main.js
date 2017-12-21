@@ -15,6 +15,7 @@ function initApplication(){
     for (var i = 0; i < allUsers.length; i++) {
       //allUsers[i].Display();
       allUsers[i].Draw();
+      allUsers[i].Marker();
     };
   });
 }
