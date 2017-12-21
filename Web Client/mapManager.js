@@ -35,19 +35,39 @@ function createFlightDraw(locations, color) {
   flightPath.setMap(map);
 }
 
-function createMarker(location, email) {
+function createMarker(location, content) {
   var marker = new google.maps.Marker({
     position: location,
     map: map,
     animation: google.maps.Animation.DROP,
-    label: email,
-    title: 'Hello World!'
+    label: content.title,
+    title: content.title,
   });
+
+  var contentString = '<div id="content">'+
+              '<div id="siteNotice">'+
+              '</div>'+
+              '<h1 id="firstHeading" class="firstHeading">' + content.title + '</h1>'+
+              '<div id="bodyContent">'+
+              '<p><b>E-Mail:\t' + content.email +
+              '<p>Name:\t' + content.name + '</p>' +
+              '<p>Age:\t' + content.age + '</p>' +
+              '<p>Gender:\t' + content.gender + '</p>' +
+              '<p>Total Time:\t' + content.totalTime + ' Minutes.' + '</p>' +
+              '<p>Total Distance:\t' + content.totalDistance + ' Kilometers.' + '</p>' +
+              '</div>'+
+              '</div>';
+
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+
   marker.addListener('click', function toggleBounce() {
     if (marker.getAnimation() !== null) {
       marker.setAnimation(null);
     } else {
       marker.setAnimation(google.maps.Animation.BOUNCE);
+      infowindow.open(map, marker);
     }
   });
 

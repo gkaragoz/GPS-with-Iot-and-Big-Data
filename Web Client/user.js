@@ -62,9 +62,17 @@ class User {
       lat: locations[0].lat,
       lng: locations[0].lng
     }
-    var email = this.email;
+    var content = {
+      "email": this.email,
+      "name": this.name,
+      "age": this.age,
+      "gender": this.gender,
+      "totalTime": this.totalTime,
+      "totalDistance": this.totalDistance,
+      "title": this.name + " (" + this.age + ")"
+    };
 
-    createMarker(location, email);
+    createMarker(location, content);
   }
 
   GetLocations() {
