@@ -39,12 +39,22 @@ function createMarker(location) {
   var marker = new google.maps.Marker({
     position: location,
     map: map,
+    animation: google.maps.Animation.DROP,
     title: 'Hello World!'
+  });
+  marker.addListener('click', function toggleBounce() {
+    if (marker.getAnimation() !== null) {
+      marker.setAnimation(null);
+    } else {
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
   });
 
   console.log("Drew marker!");
   marker.setMap(map);
 }
+
+
 
 function setMapCenter(zoomLevel, location) {
   var map = new google.maps.Map(document.getElementById('map', options), {
