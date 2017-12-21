@@ -67,6 +67,11 @@ function createMarker(location, content) {
       marker.setAnimation(null);
     } else {
       marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+
+    if (isInfoWindowOpen(infowindow)){
+      infowindow.close();
+    } else {
       infowindow.open(map, marker);
     }
   });
@@ -75,7 +80,10 @@ function createMarker(location, content) {
   marker.setMap(map);
 }
 
-
+function isInfoWindowOpen(infoWindow){
+    var map = infoWindow.getMap();
+    return (map !== null && typeof map !== "undefined");
+}
 
 function setMapCenter(zoomLevel, location) {
   var map = new google.maps.Map(document.getElementById('map', options), {
