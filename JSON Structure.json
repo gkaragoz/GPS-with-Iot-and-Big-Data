@@ -1,0 +1,135 @@
+{
+  "gps" : {
+    "users" : [ {
+      "activities" : [ {
+        "locations" : [ {
+          "lat" : 40.743399,
+          "lng" : 30.370077,
+          "timestamp" : 1513711345
+        }, {
+          "lat" : 40.744247,
+          "lng" : 30.371341,
+          "timestamp" : 1513711346
+        }, {
+          "lat" : 40.745395,
+          "lng" : 30.372351,
+          "timestamp" : 1513713452
+        }, {
+          "lat" : 40.746762,
+          "lng" : 30.373596,
+          "timestamp" : 15137113463
+        }, {
+          "lat" : 40.747924,
+          "lng" : 30.37374,
+          "timestamp" : 1513712342
+        }, {
+          "lat" : 40.748867,
+          "lng" : 30.373867,
+          "timestamp" : 1513734532
+        }, {
+          "lat" : 40.749209,
+          "lng" : 30.373939,
+          "timestamp" : 1513716643
+        }, {
+          "lat" : 40.749154,
+          "lng" : 30.37596,
+          "timestamp" : 1513767113
+        }, {
+          "lat" : 40.748977,
+          "lng" : 30.376339,
+          "timestamp" : 1513713453
+        }, {
+          "lat" : 40.749004,
+          "lng" : 30.377042,
+          "timestamp" : 1513123333
+        } ],
+        "totalDistance" : 6.2,
+        "totalTime" : 27
+      } ],
+      "age" : "21",
+      "email" : "gkaragoz96@gmail.com",
+      "gender" : "male",
+      "name" : "Gökhan"
+    }, {
+      "activities" : [ {
+        "locations" : [ {
+          "lat" : 40.742207,
+          "lng" : 30.325448,
+          "timestamp" : 1513711345
+        }, {
+          "lat" : 40.741971,
+          "lng" : 30.325309,
+          "timestamp" : 1513711346
+        }, {
+          "lat" : 40.741288,
+          "lng" : 30.32739,
+          "timestamp" : 1513713452
+        }, {
+          "lat" : 40.742914,
+          "lng" : 30.329407,
+          "timestamp" : 15137113463
+        }, {
+          "lat" : 40.74358,
+          "lng" : 30.329321,
+          "timestamp" : 1513712342
+        }, {
+          "lat" : 40.743141,
+          "lng" : 30.330587,
+          "timestamp" : 1513734532
+        }, {
+          "lat" : 40.744239,
+          "lng" : 30.331274,
+          "timestamp" : 1513716643
+        } ],
+        "totalDistance" : 2.2,
+        "totalTime" : 12
+      } ],
+      "age" : "23",
+      "email" : "illegaldisease@gmail.com",
+      "gender" : "Male",
+      "name" : "Furkan"
+    }, {
+      "activities" : [ {
+        "locations" : [ {
+          "lat" : 40.75642,
+          "lng" : 30.354253,
+          "timestamp" : 1513711345
+        }, {
+          "lat" : 40.756686,
+          "lng" : 30.356207,
+          "timestamp" : 1513711346
+        }, {
+          "lat" : 40.75974,
+          "lng" : 30.356716,
+          "timestamp" : 1513713452
+        }, {
+          "lat" : 40.761877,
+          "lng" : 30.357163,
+          "timestamp" : 15137113463
+        }, {
+          "lat" : 40.761592,
+          "lng" : 30.358951,
+          "timestamp" : 1513712342
+        }, {
+          "lat" : 40.761618,
+          "lng" : 30.360747,
+          "timestamp" : 1513734532
+        }, {
+          "lat" : 40.761964,
+          "lng" : 30.361712,
+          "timestamp" : 1513716643
+        }, {
+          "lat" : 40.760583,
+          "lng" : 30.36286,
+          "timestamp" : 1513716643
+        } ],
+        "totalDistance" : 8.2,
+        "totalTime" : 25
+      } ],
+      "age" : "21",
+      "email" : "umutsimsek96@gmail.com",
+      "gender" : "Male",
+      "name" : "Umut"
+    } ]
+  }
+}
