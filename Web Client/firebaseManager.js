@@ -42,27 +42,25 @@ function initFirebase(){
   });
 }
 
-function getFirebaseUserData(postId){
+function getFirebaseUserData(callback){
   var databaseRef = firebase.database().ref();
   databaseRef.on('value', function(snapshot) {
+    if (snapshot.val() == null)
+      return;
+
     var stringifiedData = JSON.stringify(snapshot.val());
     var dataSize = Object.keys(stringifiedData).length;
     var parsedData = JSON.parse(stringifiedData);
 
     console.log("[info] User datas have been got: " + dataSize + " byte");
-    return parsedData;
+
+    if (callback)
+      callback(parsedData);
   });
 }
 
-function writeFirebaseUserData(data) {
-  // Get a reference to the database service
-  var databaseRef = firebase.database().ref();
-  var locationsRef = databaseRef.child('app/locations/' + data.sender);
-  var newDataRef = locationsRef.push();
-  newDataRef.set({
-    timestamp: data.timestamp,
-    lat: data.lat,
-    lng: data.lng
-  });
+function writeFirebaseUserData(data, userNumber) {
+  firebase.database().ref('gps/users/' + userNumber).set(data);
+
   console.log("[info] Data has been written: " + JSON.stringify(data));
 }
