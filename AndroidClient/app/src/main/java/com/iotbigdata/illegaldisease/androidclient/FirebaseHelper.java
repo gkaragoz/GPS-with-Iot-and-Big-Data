@@ -34,6 +34,7 @@ public class FirebaseHelper extends Application{
 
     }
     public FirebaseHelper(String gender,String age, String name,String email){
+        //Call this if you want to produce a dummy data
         FirebaseHelper.gender = gender;
         FirebaseHelper.name = name;
         FirebaseHelper.age = age;

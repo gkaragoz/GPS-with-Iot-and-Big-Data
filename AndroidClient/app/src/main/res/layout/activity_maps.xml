@@ -6,13 +6,13 @@
     android:gravity="center"
     android:orientation="vertical">
     <!-- TODO: No hardcoded string here. -->
-    <TextView
-        android:id="@+id/textTime"
+
+    <Chronometer
+        android:id="@+id/chronometer_Maps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="00:00:00"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        android:textSize="36sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
