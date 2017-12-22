@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +30,10 @@ import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity {
     private String email;
     Button goMapsButton;
+    EditText textAge;
+    EditText textName;
+    EditText textGender;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,15 +42,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void InitializeValues(){
+        textAge = findViewById(R.id.editText_Age);
+        textName = findViewById(R.id.editText_Name);
+        textGender = findViewById(R.id.editText_Gender);
         email = getEmail();
-        FirebaseHelper helper = new FirebaseHelper("rabbit","123456789","yasemin",email);
+        //FirebaseHelper helper = new FirebaseHelper("rabbit","123456789","yasemin",email);
         goMapsButton = findViewById(R.id.button_mainGoMaps);
 
         goMapsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,MapsActivity.class);
-                MainActivity.this.startActivity(intent);
+                if(textAge.getText().length() > 0 && textGender.getText().length() > 0 && textName.getText().length() > 0)
+                {
+                    Intent intent = new Intent(MainActivity.this,MapsActivity.class);
+                    FirebaseHelper.gender = textGender.getText().toString();
+                    FirebaseHelper.name = textName.getText().toString();
+                    FirebaseHelper.age = textAge.getText().toString();
+                    MainActivity.this.startActivity(intent);
+                }
+                //Do nothing on empty infos.
             }
         });
     }

@@ -5,11 +5,13 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -34,6 +36,7 @@ public class MapsActivity extends FragmentActivity implements
     public List<LatLng> locations;
 
     public Button startStopButton;
+    public Chronometer chronometer;
 
     public static final String TAG = MapsActivity.class.getSimpleName();
 
@@ -71,15 +74,35 @@ public class MapsActivity extends FragmentActivity implements
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
 
         startStopButton = findViewById(R.id.buttonStartStop);
+        chronometer = findViewById(R.id.chronometer_Maps);
+        chronometer.setFormat("HH:MM:SS");
+        chronometer.setText("00:00:00");
+        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer cArg) {
+                long time = SystemClock.elapsedRealtime() - cArg.getBase();
+                int h = (int) (time / 3600000);
+                int m = (int) (time - h * 3600000) / 60000;
+                int s = (int) (time - h * 3600000 - m * 60000) / 1000;
+                String hh = h < 10 ? "0" + h : h + "";
+                String mm = m < 10 ? "0" + m : m + "";
+                String ss = s < 10 ? "0" + s : s + "";
+                cArg.setText(hh + ":" + mm + ":" + ss);
+            }
+        });
         startStopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseHelper.isActive = !FirebaseHelper.isActive;
                 if(FirebaseHelper.isActive){
                     startStopButton.setText(R.string.ButtonStop);
+                    chronometer.start();
                 }
                 else{
                     startStopButton.setText(R.string.ButtonStart);
+                    chronometer.stop();
+                    chronometer.setBase(SystemClock.elapsedRealtime());
+                    chronometer.setText("00:00:00");
                 }
 
             }

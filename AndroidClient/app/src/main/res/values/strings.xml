@@ -5,4 +5,8 @@
     <string name="ButtonStart">Start</string>
     <string name="ButtonStop">Stop</string>
     <string name="FirebaseParent">gps</string>
+    <string name="TextViewAge">Age</string>
+    <string name="TextViewName">Name</string>
+    <string name="TextViewGender">Gender</string>
+    <string name="Authenticate">Login</string>
 </resources>
